@@ -1,0 +1,25 @@
+{
+    "private": {
+        "414379654728777729": {
+            "private_channel_id": 1037495043516276776,
+            "role_id": 1045778800815902781,
+            "contact_channel_id": 1037495000604360816,
+            "restricted_users": [],
+            "status": "invite"
+        },
+        "323053990898302986": {
+            "private_channel_id": 1037494058765000734,
+            "role_id": 1037495410505293855,
+            "contact_channel_id": 1037494421580697630,
+            "restricted_users": [],
+            "status": "invite"
+        },
+        "343676881448730636": {
+            "private_channel_id": 1038462364162461727,
+            "role_id": 1038461947856834601,
+            "contact_channel_id": 1038462734272057386,
+            "restricted_users": [],
+            "status": "invite"
+        }
+    }
+}
