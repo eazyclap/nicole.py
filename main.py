@@ -9,8 +9,7 @@ from keep_alive import keep_alive
 
 
 # CONSTANTS AND PARAMETERS
-# TODO RESET TO DS_TOKEN
-TOKEN = os.environ["TESTING_TOKEN"]
+TOKEN = os.environ["DS_TOKEN"]
 intents = discord.Intents.all()
 help_command = commands.DefaultHelpCommand(no_category='Non sorted commands')
 

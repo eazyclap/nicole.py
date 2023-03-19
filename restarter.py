@@ -2,8 +2,7 @@ from time import sleep
 from os import system
 
 # Activate this, set false for testing
-# TODO ACTIVATE
-IN_FUNCTION = False
+IN_FUNCTION = True
 
 if IN_FUNCTION:
     sleep(7)
