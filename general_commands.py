@@ -224,10 +224,10 @@ class General(commands.Cog, name="General"):
             await message.reply(rock)
 
     @commands.hybrid_command(
-        name="spam",
-        help="Hasta la vista!"
+        name="say",
+        help="Lemme say something!"
     )
-    async def spam(self, ctx: commands.Context, reply: str = "Get spammed!", amount: int = 5):
+    async def spam(self, ctx: commands.Context, reply: str = "Hello!", amount: int = 1):
         if ctx.message.reference is None:
             for _ in range(amount):
                 await ctx.send(reply)

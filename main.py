@@ -20,6 +20,8 @@ bot = commands.Bot(
     intents=intents,
     help_command=help_command
 )
+
+
 # Default help command is replaced with a more fancy one (check "help_command.py")
 bot.remove_command("help")
 
