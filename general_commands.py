@@ -227,7 +227,7 @@ class General(commands.Cog, name="General"):
         name="say",
         help="Lemme say something!"
     )
-    async def spam(self, ctx: commands.Context, reply: str = "Hello!", amount: int = 1):
+    async def say(self, ctx: commands.Context, reply: str = "Hello!", amount: int = 1):
         if ctx.message.reference is None:
             for _ in range(amount):
                 await ctx.send(reply)
