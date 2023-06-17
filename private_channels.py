@@ -3,23 +3,30 @@ import json
 from discord.ext import commands
 
 
+general_database = {}
 private_channels_database = {}
 
 
-def save_private_voice_channels():
+def save_private_voice_channels(server_id: int):
+    global general_database
+    with open("./private_channels.json", mode="r") as file:
+        general_database = json.load(file)
+
+    general_database[f"{server_id}"] = private_channels_database
+
     with open("./private_channels.json", mode="w") as file:
-        json.dump({"private": private_channels_database}, file, indent=4)
+        json.dump(general_database, file, indent=4)
 
 
-def get_private_voice_channels():
+def get_private_voice_channels(server_id: int):
     global private_channels_database
     with open("./private_channels.json", mode="r") as file:
-        private_channels_database = json.load(file)["private"]
+        private_channels_database = json.load(file)[f"{server_id}"]
 
 
 def user_has_private_channel(ctx: commands.Context):
     global private_channels_database
-    get_private_voice_channels()
+    get_private_voice_channels(ctx.guild.id)
 
     return str(ctx.author.id) in private_channels_database.keys()
 
@@ -39,7 +46,7 @@ class PrivateChannels(commands.Cog):
     async def request(self, ctx: commands.Context, channel_owner: discord.Member, request_type: str = "JOIN",
                       knock: bool = False):
         # Get data
-        get_private_voice_channels()
+        get_private_voice_channels(ctx.guild.id)
         monitor_reaction = []
 
         async def stop_monitoring(delete_msg: discord.Message):
@@ -164,7 +171,7 @@ class PrivateChannels(commands.Cog):
                             f"{request_type} request from {ctx.author.mention}: {order}")
                         await stop_monitoring(message)
                         # Save data
-                        save_private_voice_channels()
+                        save_private_voice_channels(ctx.guild.id)
                         return
 
     @commands.hybrid_command(
@@ -174,7 +181,7 @@ class PrivateChannels(commands.Cog):
     @commands.check(user_has_private_channel)
     async def restrict(self, ctx: commands.Context, user: discord.Member):
         global private_channels_database
-        get_private_voice_channels()
+        get_private_voice_channels(ctx.guild.id)
 
         # User already restricted?
         if user.id in private_channels_database[str(ctx.author.id)]["restricted_users"]:
@@ -184,7 +191,7 @@ class PrivateChannels(commands.Cog):
         # Carry the request
         private_channels_database[f"{ctx.author.id}"]["restricted_users"].append(user.id)
         await ctx.send(f"{user.display_name} restricted successfully!")
-        save_private_voice_channels()
+        save_private_voice_channels(ctx.guild.id)
         return
 
     @restrict.error
@@ -199,7 +206,7 @@ class PrivateChannels(commands.Cog):
     @commands.check(user_has_private_channel)
     async def unrestrict(self, ctx: commands.Context, user: discord.Member):
         global private_channels_database
-        get_private_voice_channels()
+        get_private_voice_channels(ctx.guild.id)
 
         # User not restricted in the first place?
         if user.id not in private_channels_database[f"{ctx.author.id}"]["restricted_users"]:
@@ -211,7 +218,7 @@ class PrivateChannels(commands.Cog):
             if restricted_id == user.id:
                 private_channels_database[f"{ctx.author.id}"]["restricted_users"].pop(index)
         await ctx.send(f"User {user.display_name} successfully unrestricted!")
-        save_private_voice_channels()
+        save_private_voice_channels(ctx.guild.id)
         return
 
     @unrestrict.error
@@ -230,8 +237,8 @@ class PrivateChannels(commands.Cog):
             await ctx.send("Sorry, you can only set your channel as open, invite, closed or invisible!")
             return
 
-        get_private_voice_channels()
+        get_private_voice_channels(ctx.guild.id)
         private_channels_database[f"{ctx.author.id}"]["status"] = status.lower()
-        save_private_voice_channels()
+        save_private_voice_channels(ctx.guild.id)
         await ctx.send(f"Successfully changed the status of your channel to {status.capitalize()}!")
         return
