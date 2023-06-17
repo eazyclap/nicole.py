@@ -36,6 +36,7 @@ async def on_ready():
     await bot.add_cog(BaseEvents(bot))
     await bot.add_cog(PrivateChannels(bot))
     await bot.add_cog(TestingCommands(bot))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Francesco!"))
     await bot.tree.sync()
     await bot.wait_until_ready()
     print(f'Logged in as {bot.user} (ID: {bot.user.id})')
