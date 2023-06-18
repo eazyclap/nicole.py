@@ -227,15 +227,15 @@ class General(commands.Cog, name="General"):
         name="say",
         help="Lemme say something!"
     )
-    async def say(self, ctx: commands.Context, reply: str = "Hello!", amount: int = 1):
+    async def say(self, ctx: commands.Context, text: str = "Hello!", amount: int = 1):
         if ctx.message.reference is None:
             for _ in range(amount):
-                await ctx.send(reply)
+                await ctx.send(text)
             return
         message = await ctx.fetch_message(ctx.message.reference.message_id)
         await ctx.message.delete()
         for _ in range(amount):
-            await message.reply(reply)
+            await message.reply(text)
 
 
 class BaseEvents(commands.Cog, name="BaseEvents"):
