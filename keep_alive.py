@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 from threading import Thread
 
-app = Flask('')
+app = Flask('', template_folder="web-files", static_folder="web-files/static")
 
 @app.route('/')
 def home():
-  return "Client nicole.py is online!"
+  return render_template("home.html")
     
 def run():
   app.run(host='0.0.0.0',port=8080)
