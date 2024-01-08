@@ -8,6 +8,11 @@ from private_channels import PrivateChannels
 from keep_alive import keep_alive
 from testing_commands import TestingCommands
 
+# TODO Prepare code for deploy on independent server,
+#  review files and prepare for multi-server usage,
+#  clean code and optimize commands,
+#  add some fun games as well.
+
 
 # CONSTANTS AND PARAMETERS
 # TODO RESET TO DS_TOKEN

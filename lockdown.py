@@ -2,6 +2,7 @@ import discord
 import json
 from discord.ext import commands
 
+# TODO Review code, add possibility for multiple servers
 
 locked_voice_channels = []
 
